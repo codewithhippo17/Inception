@@ -3,6 +3,9 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y procps dumb-init
 COPY server.py .
 
+# ❌ BAD: Shell Form (Creates a /bin/sh wrapper)
+# CMD python server.py
+
 # We will run this twice: once overriding the entrypoint (bad), and once using dumb-init (good).
 ENTRYPOINT ["dumb-init", "--"]
 CMD ["python", "-u", "server.py"]
