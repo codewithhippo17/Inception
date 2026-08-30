@@ -1,0 +1,7 @@
+FROM debian:latest
+WORKDIR /app
+COPY worker.sh startup-fixed.sh ./
+RUN chmod +x worker.sh startup-fixed.sh
+
+# Using Exec Form with our fixed script
+ENTRYPOINT ["./startup-fixed.sh"]
