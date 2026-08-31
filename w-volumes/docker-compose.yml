@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  # 1. Standard Named Volume (Data hidden in /var/lib/docker)
+  test-named:
+    image: alpine
+    command: sh -c "echo 'Named Volume Data' > /data/file.txt && tail -f /dev/null"
+    volumes:
+      - standard-vol:/data
+
+  # 2. Standard Bind Mount (Forbidden by Inception subject)
+  test-bind:
+    image: alpine
+    command: sh -c "echo 'Bind Mount Data' > /data/file.txt && tail -f /dev/null"
+    volumes:
+      - ./host-bind-folder:/data
+
+  # 3. The Inception Trick (Named Volume pointing to host path)
+  test-trick:
+    image: alpine
+    command: sh -c "echo 'Trick Volume Data' > /data/file.txt && tail -f /dev/null"
+    volumes:
+      - trick-vol:/data
+
+volumes:
+  standard-vol:
+    # No driver opts = goes to /var/lib/docker/volumes
+  trick-vol:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      # device requires an absolute path
+      device: /home/_hippo/dev/inception/w-volumes/host-trick-folder
