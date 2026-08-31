@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y nginx systemd
 CMD systemctl start nginx && tail -f /dev/null
 
 # =========================================================================
-# ✅ THE FIX: Run in the Foreground
+#FIX: Run in the Foreground
 # =========================================================================
 # To fix this container, comment out the CMD above, and uncomment the one below.
 # Docker wants your app to run directly as PID 1, not managed by systemd.
