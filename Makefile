@@ -8,7 +8,7 @@ setup:
 	@mkdir -p $(DATA_PATH)/mariadb
 	@mkdir -p $(DATA_PATH)/wordpress
 
-up:
+up: setup
 	$(COMPOSE) up -d --build
 
 down:
