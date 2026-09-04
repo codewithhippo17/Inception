@@ -6,6 +6,9 @@ RUN apk update && apk add --no-cache \
     php82-json php82-mbstring php82-xml php82-zip \
     php82-phar php82-iconv mariadb-client curl wget tar
 
+# Increase PHP memory limit to prevent WP-CLI extraction crashes
+RUN echo "memory_limit = 512M" >> /etc/php82/conf.d/memory.ini
+
 # Install WP-CLI for automated WordPress configuration
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x wp-cli.phar \
