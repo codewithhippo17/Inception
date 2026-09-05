@@ -2,7 +2,7 @@
 FROM alpine:3.19
 
 # Install MariaDB server and client
-RUN apk update && apk add --no-cache mariadb mariadb-client
+RUN apk add --no-cache mariadb mariadb-client
 
 # Create the socket directory and set ownership
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld

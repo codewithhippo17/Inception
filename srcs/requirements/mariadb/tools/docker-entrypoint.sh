@@ -1,8 +1,8 @@
 #!/bin/sh
 set -euo pipefail
 
-# 7. Add trap cleanup to prevent orphaned background processes on interruption
-trap 'kill "$temp_pid" 2>/dev/null || true; wait "$temp_pid" 2>/dev/null || true' EXIT INT TERM
+temp_pid=""
+trap 'if [ -n "$temp_pid" ]; then kill "$temp_pid" 2>/dev/null || true; wait "$temp_pid" 2>/dev/null || true; fi' EXIT INT TERM
 
 if [ ! -d "/var/lib/mysql/mysql" ]; then
   echo "Initializing fresh MariaDB database..."
@@ -80,4 +80,3 @@ fi
 # Hand off PID 1 to the database daemon
 echo "Starting MariaDB daemon..."
 exec "$@"
-

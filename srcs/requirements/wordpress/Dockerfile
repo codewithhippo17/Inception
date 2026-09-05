@@ -1,10 +1,10 @@
 FROM alpine:3.19
 
 # Install PHP-FPM, necessary extensions for WordPress, and CLI tools
-RUN apk update && apk add --no-cache \
+RUN apk add --no-cache \
     php82 php82-fpm php82-mysqli php82-curl \
     php82-json php82-mbstring php82-xml php82-zip \
-    php82-phar php82-iconv mariadb-client curl wget tar
+    php82-phar php82-iconv mariadb-client curl
 
 # Increase PHP memory limit to prevent WP-CLI extraction crashes
 RUN echo "memory_limit = 512M" >> /etc/php82/conf.d/memory.ini

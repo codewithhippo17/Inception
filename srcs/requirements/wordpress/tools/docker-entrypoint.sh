@@ -3,7 +3,18 @@ set -euo pipefail
 
 # Wait for MariaDB to be fully initialized and accessible
 echo "Waiting for MariaDB..."
-while ! mariadb -h mariadb -u "${MYSQL_USER}" -p"$(cat /run/secrets/db_password)" "${MYSQL_DATABASE}" -e "SELECT 1;" --silent; do
+for i in $(seq 1 30); do
+  if mariadb -h mariadb -u "${MYSQL_USER}" \
+    -p"$(cat /run/secrets/db_password)" \
+    "${MYSQL_DATABASE}" -e "SELECT 1;" --silent; then
+    break
+  fi
+
+  if [ "$i" -eq 30 ]; then
+    echo "Error: MariaDB did not become ready."
+    exit 1
+  fi
+
   sleep 2
 done
 echo "MariaDB is ready!"
@@ -44,7 +55,9 @@ if [ ! -f "/var/www/html/wp-config.php" ]; then
   echo "WordPress successfully installed and configured!"
 fi
 
+echo "Setting WordPress permissions..."
+chown -R nobody:nobody /var/www/html
+
 # Subject constraint: No hacky patches. Hand over PID 1 to php-fpm in the foreground.
 echo "Starting PHP-FPM..."
 exec "$@"
-

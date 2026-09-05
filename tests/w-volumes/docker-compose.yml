@@ -31,4 +31,4 @@ volumes:
       type: none
       o: bind
       # device requires an absolute path
-      device: /home/_hippo/dev/inception/w-volumes/host-trick-folder
+      device: /home/ehamza/dev/inception/w-volumes/host-trick-folder

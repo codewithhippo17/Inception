@@ -1,6 +1,6 @@
 NAME = inception
 COMPOSE = docker compose -f srcs/docker-compose.yml
-DATA_PATH = /home/_hippo/data
+DATA_PATH = /home/ehamza/data
 
 all: setup up
 
