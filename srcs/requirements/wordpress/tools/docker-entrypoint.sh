@@ -1,4 +1,5 @@
 #!/bin/sh
+set -euo pipefail
 
 # Wait for MariaDB to be fully initialized and accessible
 echo "Waiting for MariaDB..."
